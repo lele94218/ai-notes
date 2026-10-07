@@ -41,7 +41,26 @@ def train_bpe(input_path: str, vocab_size: int, special_tokens: list[str]):
 
     # 4. to single bytes -> frequency
     # { "l o w": 1, " l o w": 2, "l o w e r": 1, "l o w e r e s t": 1}
+    byte_freqs = []
+    byte_words = []
 
-    bytes_freq = {}
+    for k, v in counts:
+        byte_words.add([bytes([c]) for c in k])
+        byte_freqs.add(v)
+
+    # 5. merge adjacent bytes
+    # (l, o)  = 1 + 2 + 1 + 1 = 5
+    # (o, w)  = 5
+    # (␣, l)  = 2 + 1 = 3
+    # (w, e)  = 2
+    # (e, r)、(e, s)、(s, t) = 1
+
+    merged_count = {}
+    for byte_word in byte_words:
+        for i in range(len(byte_word)):
+            j = i + 1
+            if j >= len(byte_word):
+                break
+            merged_count
 
     pass
